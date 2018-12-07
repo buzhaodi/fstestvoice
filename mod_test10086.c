@@ -29,6 +29,7 @@ typedef struct test10086_session_s {
     switch_audio_resampler_t *read_resampler;
     switch_audio_resampler_t *write_resampler;
     int voicecount;
+	int testvoicedata;
 	
 } test10086_session_t;
 
@@ -108,7 +109,7 @@ static switch_bool_t amd_process_buffer(switch_media_bug_t *bug, void *user_data
             char *data = (char *) frame->data;
 		
 			
-			if (80<strlen(data)){
+			if (test10086_t->testvoicedata<strlen(data)){
 				voicecount = switch_channel_get_variable(channel, "voicecount");				
               	if (voicecount) {
 					  intvoicecount=atoi(voicecount)+1;
@@ -192,6 +193,11 @@ SWITCH_STANDARD_APP(test10086_start_app)
 	switch_media_bug_t *bug = NULL;
     test10086_session_t *cont = NULL;
 
+
+
+
+	
+
     cont = switch_core_session_alloc(session, sizeof(*cont));
 	switch_assert(cont);
 	memset(cont, 0, sizeof(*cont));
@@ -215,6 +221,17 @@ SWITCH_STANDARD_APP(test10086_start_app)
 	}
 	
     cont->session = session;
+
+	if (zstr(data)) {
+		switch_log_printf(SWITCH_CHANNEL_SESSION_LOG(session), SWITCH_LOG_ERROR, "no testvoicedata found set defult value 200.\n");
+		cont->testvoicedata=200;
+	}else{
+		switch_log_printf(SWITCH_CHANNEL_SESSION_LOG(session), SWITCH_LOG_INFO, "testvoicedata is  %s\n" ,data);
+		cont->testvoicedata=atoi(data);
+	}
+
+
+
 
 
 	/* Add media bug */
@@ -246,9 +263,11 @@ SWITCH_MODULE_LOAD_FUNCTION(mod_test10086_load)
 {
 	switch_application_interface_t *app;
 
+
 	*module_interface = switch_loadable_module_create_module_interface(pool, modname);
 
-	SWITCH_ADD_APP(app, "test10086_start", "Start VAD", "Start VAD", test10086_start_app, SIMPLEVAD_START_SYNTAX, SAF_MEDIA_TAP);
+	SWITCH_ADD_APP(app, "test10086_start", "test 10086voice app", "Start VAD", test10086_start_app, SIMPLEVAD_START_SYNTAX, SAF_MEDIA_TAP);
+
     switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_NOTICE, "mod test10086 aload!\n");
 
 
