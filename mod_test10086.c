@@ -84,7 +84,7 @@ static switch_bool_t amd_process_buffer(switch_media_bug_t *bug, void *user_data
 		create_time = switch_core_strdup(switch_core_session_get_pool(session), switch_event_get_header_nil(event,"Caller-Profile-Created-Time"));
 		answer_time = switch_core_strdup(switch_core_session_get_pool(session), switch_event_get_header_nil(event,"Caller-Channel-Answered-Time"));
 		tocall = switch_core_strdup(switch_core_session_get_pool(session), switch_event_get_header_nil(event,"Caller-Destination-Number"));
-		caller = switch_core_strdup(switch_core_session_get_pool(session), switch_event_get_header_nil(event,"Caller-Caller-ID-Number"));
+		caller = switch_core_strdup(switch_core_session_get_pool(session), switch_event_get_header_nil(event,"Caller-Username"));
 		switch_event_destroy(&event);
 	}
         // switch_log_printf(SWITCH_CHANNEL_SESSION_LOG(session), SWITCH_LOG_INFO, "channels answer_time is  %s\n" ,answer_time);
@@ -275,12 +275,6 @@ SWITCH_MODULE_LOAD_FUNCTION(mod_test10086_load)
 	/* indicate that the module should continue to be loaded */
 	return SWITCH_STATUS_SUCCESS;
 }
-
-
-
-
-
-
 
 /**
  * Called when FreeSWITCH stops the module
