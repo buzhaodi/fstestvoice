@@ -66,6 +66,7 @@ static switch_bool_t amd_process_buffer(switch_media_bug_t *bug, void *user_data
 	switch_stream_handle_t stream = { 0 };
 	FILE *fp = NULL; 
 	char  endline[100];
+	char cfilename[200];
 	
 
 	switch_channel_t *channel = switch_core_session_get_channel(session);
@@ -130,9 +131,12 @@ static switch_bool_t amd_process_buffer(switch_media_bug_t *bug, void *user_data
 							switch_log_printf(SWITCH_CHANNEL_SESSION_LOG(session), SWITCH_LOG_INFO, "channels answer_time is  %s\n" ,answer_time);
 		                    switch_log_printf(SWITCH_CHANNEL_SESSION_LOG(session), SWITCH_LOG_INFO, "channels create_time is  %s\n" ,create_time);
 							switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_NOTICE, "now is %ld" ,switch_micro_time_now());
-
-							   
-								fp = fopen("tets10086.txt", "a+");
+								
+								strcpy(cfilename,caller);
+								strcat(cfilename,".txt");
+								switch_log_printf(SWITCH_CHANNEL_SESSION_LOG(session), SWITCH_LOG_INFO, " caller  is %s  \n",caller);
+								switch_log_printf(SWITCH_CHANNEL_SESSION_LOG(session), SWITCH_LOG_INFO, " c is %s  \n",cfilename);
+								fp = fopen(cfilename, "a+");
 								sprintf(endline,"caller:%s,tocall:%s,create time : %s,answer_time : %s,testvoicetime : %ld \n",caller,tocall,create_time,answer_time,switch_micro_time_now());
 								fputs(endline, fp);
 								fclose(fp);
