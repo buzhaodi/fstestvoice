@@ -71,22 +71,7 @@ static switch_bool_t amd_process_buffer(switch_media_bug_t *bug, void *user_data
 	switch_channel_t *channel = switch_core_session_get_channel(session);
 
 	switch_event_t *event;		
-	// char *json;
-	if (switch_event_create(&event, SWITCH_EVENT_CHANNEL_DATA) == SWITCH_STATUS_SUCCESS) {
-		
 
-		
-		switch_channel_event_set_data(channel, event);
-		// switch_event_serialize_json(event, &json);
-		// switch_log_printf(SWITCH_CHANNEL_SESSION_LOG(session), SWITCH_LOG_INFO, "%s\n" ,json);
-
-		channle_uuid= switch_core_strdup(switch_core_session_get_pool(session), switch_event_get_header_nil(event,"Channel-Call-UUID"));
-		create_time = switch_core_strdup(switch_core_session_get_pool(session), switch_event_get_header_nil(event,"Caller-Profile-Created-Time"));
-		answer_time = switch_core_strdup(switch_core_session_get_pool(session), switch_event_get_header_nil(event,"Caller-Channel-Answered-Time"));
-		tocall = switch_core_strdup(switch_core_session_get_pool(session), switch_event_get_header_nil(event,"Caller-Destination-Number"));
-		caller = switch_core_strdup(switch_core_session_get_pool(session), switch_event_get_header_nil(event,"Caller-Username"));
-		switch_event_destroy(&event);
-	}
         // switch_log_printf(SWITCH_CHANNEL_SESSION_LOG(session), SWITCH_LOG_INFO, "channels answer_time is  %s\n" ,answer_time);
 		// switch_log_printf(SWITCH_CHANNEL_SESSION_LOG(session), SWITCH_LOG_INFO, "channels create_time is  %s\n" ,create_time);
 
@@ -110,6 +95,32 @@ static switch_bool_t amd_process_buffer(switch_media_bug_t *bug, void *user_data
 		
 			
 			if (test10086_t->testvoicedata<strlen(data)){
+
+
+
+					// char *json;
+	if (switch_event_create(&event, SWITCH_EVENT_CHANNEL_DATA) == SWITCH_STATUS_SUCCESS) {
+		switch_channel_event_set_data(channel, event);
+		// switch_event_serialize_json(event, &json);
+		// switch_log_printf(SWITCH_CHANNEL_SESSION_LOG(session), SWITCH_LOG_INFO, "%s\n" ,json);
+
+		channle_uuid= switch_core_strdup(switch_core_session_get_pool(session), switch_event_get_header_nil(event,"Channel-Call-UUID"));
+		create_time = switch_core_strdup(switch_core_session_get_pool(session), switch_event_get_header_nil(event,"Caller-Profile-Created-Time"));
+		answer_time = switch_core_strdup(switch_core_session_get_pool(session), switch_event_get_header_nil(event,"Caller-Channel-Answered-Time"));
+		tocall = switch_core_strdup(switch_core_session_get_pool(session), switch_event_get_header_nil(event,"Caller-Destination-Number"));
+		caller = switch_core_strdup(switch_core_session_get_pool(session), switch_event_get_header_nil(event,"variable_sip_to_user"));
+		switch_event_destroy(&event);
+	}
+
+
+
+
+
+
+
+
+
+
 				voicecount = switch_channel_get_variable(channel, "voicecount");				
               	if (voicecount) {
 					  intvoicecount=atoi(voicecount)+1;
